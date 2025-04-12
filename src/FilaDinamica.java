@@ -59,28 +59,23 @@ public class FilaDinamica implements IEstruturaDinamica {
     @Override
     public void removerTodasOcorrencias(Integer elemento) {
         No atual = this.primeiro;
-
         while (atual != null) {
             if (atual.getConteudo().equals(elemento)) {
                 No anterior = atual.getAnterior();
                 No proximo = atual.getProx();
-
                 if (anterior != null) {
                     anterior.setProx(proximo);
                 } else {
                     this.primeiro = proximo;
                 }
-
                 if (proximo != null) {
                     proximo.setAnterior(anterior);
                 } else {
                     this.ultimo = anterior;
                 }
-
                 this.qntdElementos--;
                 break;
             }
-
             atual = atual.getProx();
         }
     }
@@ -119,7 +114,6 @@ public class FilaDinamica implements IEstruturaDinamica {
             System.out.println("Não existem elementos para serem ordenados.");
         } else {
             No atual = this.primeiro;
-
             while (atual != null) {
                 No atual2 = this.primeiro;
                 while (atual2 != null && atual2.getProx() != null) {
@@ -142,19 +136,19 @@ public class FilaDinamica implements IEstruturaDinamica {
             System.out.println("Não existem elementos para serem ordenados.");
             return;
         }
-        No atual = this.primeiro;
+        No atual = this.ultimo;
         while (atual != null) {
-            No atual2 = this.primeiro;
-            while (atual2 != null && atual2.getProx() != null) {
-                No proximo = atual2.getProx();
-                if (atual2.getConteudo() < proximo.getConteudo()) {
-                    Integer aux = atual2.getConteudo();
-                    atual2.setConteudo(proximo.getConteudo());
-                    proximo.setConteudo(aux);
+            No atual2 = this.ultimo;
+            while (atual2 != null && atual2.getAnterior() != null) {
+                No anterior = atual2.getAnterior();
+                if (anterior.getConteudo() < atual2.getConteudo()) {
+                    Integer aux = anterior.getConteudo();
+                    anterior.setConteudo(atual2.getConteudo());
+                    atual2.setConteudo(aux);
                 }
-                atual2 = atual2.getProx();
+                atual2 = atual2.getAnterior();
             }
-            atual = atual.getProx();
+            atual = atual.getAnterior();
         }
     }
 
@@ -189,7 +183,6 @@ public class FilaDinamica implements IEstruturaDinamica {
         this.qntdElementos = 0;
     }
 
-
     @Override
     public void exibir() {
         No atual = this.primeiro;
@@ -207,7 +200,6 @@ public class FilaDinamica implements IEstruturaDinamica {
         }
         return this.primeiro;
     }
-
 
     @Override
     public No obterUltimoElemento() {
